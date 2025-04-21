@@ -1,41 +1,28 @@
 #include <iostream>
 #include <raylib.h>
 
-using namespace std;
+// game's color theme
+Color lightGreen = {173, 204, 96, 25};
+Color DarkGreen = {43, 51, 24, 255};
 
 int main () {
+    using namespace std;
 
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 600;
-    int ball_x = 100;
-    int ball_y = 100;
-    int ball_speed_x = 5;
-    int ball_speed_y = 5;
-    int ball_radius = 15;
+    // getting player's screen size
+    const int screenWidth = GetScreenWidth();
+    const int screenHeight = GetScreenHeight();
 
-    cout << "Hello World" << endl;
+    // create program window
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);    // Window configuration flags
+    InitWindow(screenWidth, screenHeight, "Snake game");
+    SetTargetFPS(60); // frequency of refreshing screen
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "My first RAYLIB program!");
-    SetTargetFPS(60);
-
-    while (WindowShouldClose() == false){
-
-        ball_x += ball_speed_x;
-        ball_y += ball_speed_y;
-
-        if(ball_x + ball_radius >= SCREEN_WIDTH || ball_x - ball_radius <= 0)
-        {
-            ball_speed_x *= -1;
-        }
-
-        if(ball_y + ball_radius >= SCREEN_HEIGHT || ball_y - ball_radius <= 0)
-        {
-            ball_speed_y *= -1;
-        }
-
+    while (WindowShouldClose() == false) {
         BeginDrawing();
-        ClearBackground(BLACK);
-        DrawCircle(ball_x,ball_y,ball_radius, WHITE);
+
+        // drawing
+        ClearBackground(lightGreen);
+
         EndDrawing();
     }
 
