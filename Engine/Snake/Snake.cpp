@@ -1,5 +1,6 @@
 #include "Snake.h"
 #include <deque>
+#include "../Theme/Colors.h"
 
 Snake::Snake(): body({Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}}) {}
 
@@ -18,7 +19,7 @@ void Snake::Draw(const int offsetX, const int offsetY, const int cellSize) const
             segment,
             0.4f,
             cellSize,
-            {43, 51, 24, 255}
+            darkGreen
         );
     }
 }

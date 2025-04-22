@@ -2,12 +2,9 @@
 #include <raylib.h>
 #include <deque>
 
+#include "Engine/Theme/Colors.h"
 #include "Engine/Food/Food.h"
 #include "Engine/Snake/Snake.h"
-
-// game's color theme
-Color lightGreen = {173, 204, 96, 25};
-Color darkGreen = {43, 51, 24, 255};
 
 constexpr int cellSize = 30;
 constexpr int cellCount = 20;

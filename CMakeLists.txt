@@ -21,7 +21,9 @@ add_executable(snake_game main.cpp
         Engine/Food/Food.cpp
         Engine/Food/Food.h
         Engine/Snake/Snake.cpp
-        Engine/Snake/Snake.h)
+        Engine/Snake/Snake.h
+        Engine/Theme/Colors.cpp
+        Engine/Theme/Colors.h)
 
 # Link raylib (and its dependencies)
 target_link_libraries(snake_game PRIVATE raylib)
