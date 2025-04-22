@@ -18,8 +18,10 @@ FetchContent_MakeAvailable(raylib)
 
 # Create your executable
 add_executable(snake_game main.cpp
-        Classes/Food.cpp
-        Classes/Food.h)
+        Engine/Food/Food.cpp
+        Engine/Food/Food.h
+        Engine/Snake/Snake.cpp
+        Engine/Snake/Snake.h)
 
 # Link raylib (and its dependencies)
 target_link_libraries(snake_game PRIVATE raylib)

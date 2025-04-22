@@ -8,7 +8,7 @@ public:
     Vector2 position{};
     Texture2D texture{};
 
-    // constructor and destructor
+    // constructors and destructors
     Food();
     explicit Food(int maxSize);
     ~Food();

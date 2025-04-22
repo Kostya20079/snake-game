@@ -1,7 +1,9 @@
 #include <iostream>
 #include <raylib.h>
+#include <deque>
 
-#include "./Classes/Food.h"
+#include "Engine/Food/Food.h"
+#include "Engine/Snake/Snake.h"
 
 // game's color theme
 Color lightGreen = {173, 204, 96, 25};
@@ -18,7 +20,9 @@ int main () {
     InitWindow(GetScreenWidth(), GetScreenHeight(), "Snake game");
     SetTargetFPS(60); // frequency of refreshing screen
 
+
     Food food{cellCount};
+    Snake snake{};
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -36,7 +40,10 @@ int main () {
         // drawing
         ClearBackground(lightGreen);
 
+
         food.Draw(offsetX, offsetY, cellSize);
+        snake.Draw(offsetX, offsetY, cellSize);
+
 
         for (int i = 0; i <= cellCount; i++) {
             DrawLine(offsetX + i * cellSize, offsetY, offsetX + i * cellSize, offsetY + gridSize, darkGreen);
