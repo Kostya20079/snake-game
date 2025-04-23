@@ -1,6 +1,5 @@
 #include <iostream>
 #include <raylib.h>
-#include <deque>
 
 #include "Engine/Theme/Colors.h"
 #include "Engine/Food/Food.h"
@@ -8,6 +7,21 @@
 
 constexpr int cellSize = 30;
 constexpr int cellCount = 20;
+
+double lastUpdateTime = 0.0;
+
+// functions
+bool eventTriggered(const double interval) {
+    double currentTime = GetTime();
+
+    if (currentTime - lastUpdateTime >= interval) {
+        lastUpdateTime = currentTime;
+        return true;
+    }
+
+    return false;
+}
+
 
 int main () {
     using namespace std;
@@ -41,6 +55,32 @@ int main () {
         food.Draw(offsetX, offsetY, cellSize);
         snake.Draw(offsetX, offsetY, cellSize);
 
+        // update snake's move every 200 ms
+        if (eventTriggered(0.2)) {
+            snake.Update();
+        }
+
+        if (IsKeyPressed(KEY_UP) && snake.get_direction().y != 1) {
+            snake.set_direction({0, -1});
+        }
+        if (IsKeyPressed(KEY_DOWN) && snake.get_direction().y != -1) {
+            snake.set_direction({0, 1});
+        }
+        if (IsKeyPressed(KEY_LEFT) && snake.get_direction().x != 1) {
+            snake.set_direction({-1, 0});
+        }
+        if (IsKeyPressed(KEY_RIGHT) && snake.get_direction().x != -1) {
+            snake.set_direction({1, 0});
+        }
+
+        // !temporarily!
+        if (snake.get_head_position().x < 0 || snake.get_head_position().x >= cellCount) {
+            break;
+        }
+
+        if (snake.get_head_position().y < 0 || snake.get_head_position().y >= cellCount) {
+            break;
+        }
 
         for (int i = 0; i <= cellCount; i++) {
             DrawLine(offsetX + i * cellSize, offsetY, offsetX + i * cellSize, offsetY + gridSize, darkGreen);
