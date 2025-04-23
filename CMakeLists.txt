@@ -23,7 +23,10 @@ add_executable(snake_game main.cpp
         Engine/Snake/Snake.cpp
         Engine/Snake/Snake.h
         Engine/Theme/Colors.cpp
-        Engine/Theme/Colors.h)
+        Engine/Theme/Colors.h
+        Engine/Game/Game.cpp
+        Engine/Game/Game.h
+        Engine/Config.h)
 
 # Link raylib (and its dependencies)
 target_link_libraries(snake_game PRIVATE raylib)

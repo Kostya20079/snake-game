@@ -1,12 +1,9 @@
 #include <iostream>
 #include <raylib.h>
 
+#include "Engine/Config.h"
 #include "Engine/Theme/Colors.h"
-#include "Engine/Food/Food.h"
-#include "Engine/Snake/Snake.h"
-
-constexpr int cellSize = 30;
-constexpr int cellCount = 20;
+#include "Engine/Game/Game.h"
 
 double lastUpdateTime = 0.0;
 
@@ -31,61 +28,33 @@ int main () {
     InitWindow(GetScreenWidth(), GetScreenHeight(), "Snake game");
     SetTargetFPS(60); // frequency of refreshing screen
 
+    // getting current screen size
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
 
-    Food food{cellCount};
-    Snake snake{};
+    // calculating offset
+    const int offsetX = (screenWidth - gridSize) / 2;
+    const int offsetY = (screenHeight - gridSize) / 2;
+
+    Game game{offsetX, offsetY};
 
     while (!WindowShouldClose()) {
         BeginDrawing();
 
-        // getting current screen size
-        int screenWidth = GetScreenWidth();
-        int screenHeight = GetScreenHeight();
-
-        constexpr int gridSize = cellSize * cellCount;
-
-        // calculating offset
-        const int offsetX = (screenWidth - gridSize) / 2;
-        const int offsetY = (screenHeight - gridSize) / 2;
-
         // drawing
         ClearBackground(lightGreen);
 
+        game.Draw();
 
-        food.Draw(offsetX, offsetY, cellSize);
-        snake.Draw(offsetX, offsetY, cellSize);
+        // read action for move
+        game.HandleInput();
 
         // update snake's move every 200 ms
         if (eventTriggered(0.2)) {
-            snake.Update();
+            game.Update();
         }
 
-        if (IsKeyPressed(KEY_UP) && snake.get_direction().y != 1) {
-            snake.set_direction({0, -1});
-        }
-        if (IsKeyPressed(KEY_DOWN) && snake.get_direction().y != -1) {
-            snake.set_direction({0, 1});
-        }
-        if (IsKeyPressed(KEY_LEFT) && snake.get_direction().x != 1) {
-            snake.set_direction({-1, 0});
-        }
-        if (IsKeyPressed(KEY_RIGHT) && snake.get_direction().x != -1) {
-            snake.set_direction({1, 0});
-        }
-
-        // !temporarily!
-        if (snake.get_head_position().x < 0 || snake.get_head_position().x >= cellCount) {
-            break;
-        }
-
-        if (snake.get_head_position().y < 0 || snake.get_head_position().y >= cellCount) {
-            break;
-        }
-
-        for (int i = 0; i <= cellCount; i++) {
-            DrawLine(offsetX + i * cellSize, offsetY, offsetX + i * cellSize, offsetY + gridSize, darkGreen);
-            DrawLine(offsetX, offsetY + i * cellSize, offsetX + gridSize, offsetY + i * cellSize, darkGreen);
-        }
+        if (game.IsGameOver()) break;
 
         EndDrawing();
     }
