@@ -20,6 +20,10 @@ Vector2 Snake::get_head_position() const {
     return body.front();
 }
 
+std::deque<Vector2> Snake::get_body_positions() const {
+    return body;
+}
+
 
 // class methods
 void Snake::Draw(const int offsetX, const int offsetY, const int cellSize) const{

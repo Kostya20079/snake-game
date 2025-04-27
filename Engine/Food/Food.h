@@ -1,24 +1,29 @@
 #ifndef FOOD_H
 #define FOOD_H
 
+#include <deque>
 #include <raylib.h>
 
 class Food {
 public:
-    Vector2 position{};
-    Texture2D texture{};
-
     // constructors and destructors
-    Food();
-    explicit Food(int maxSize);
+    explicit Food(const std::deque<Vector2>& snakeBody);
     ~Food();
+
+    // getters
+    Vector2 get_position() const;
 
     // class methods
     void Draw(int offsetX, int offsetY, int cellSize) const;
+    Vector2 GenerateRandomPosition(const std::deque<Vector2> &snakeBody);
 
 private:
+    Vector2 position{};
+    Texture2D texture{};
+
     void LoadTexture();
-    static Vector2 GenerateRandomPosition(int maxCountOfCell);
+    static Vector2 ChangePosition();
+    bool FindElementInDeque(Vector2 position, const std::deque<Vector2> &deque);
 };
 
 #endif //FOOD_H

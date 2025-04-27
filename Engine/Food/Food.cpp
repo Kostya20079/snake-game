@@ -1,11 +1,10 @@
 #include "Food.h"
+
+#include "../Config.h"
 #include <raylib.h>
+#include "raymath.h"
 
-Food::Food(): position(Vector2(0, 0)) {
-    LoadTexture();
-}
-
-Food::Food(const int maxSize): position(GenerateRandomPosition(maxSize)) {
+Food::Food(const std::deque<Vector2>& snakeBody): position(GenerateRandomPosition(snakeBody)) {
     LoadTexture();
 }
 
@@ -35,8 +34,29 @@ void Food::Draw(const int offsetX, const int offsetY, const int cellSize) const 
     );
 }
 
-Vector2 Food::GenerateRandomPosition(const int maxCountOfCell) {
-    const float x = GetRandomValue(0, maxCountOfCell - 1);
-    const float y = GetRandomValue(0, maxCountOfCell - 1);
-    return Vector2{x, y};
+Vector2 Food::get_position() const {
+    return position;
+}
+
+Vector2 Food::ChangePosition() {
+    const int x = GetRandomValue(0,  cellCount - 1);
+    const int y = GetRandomValue(0,  cellCount - 1);
+    return Vector2{static_cast<float>(x), static_cast<float>(y)};
+}
+
+bool Food::FindElementInDeque(const Vector2 position, const std::deque<Vector2> &deque) {
+    for (unsigned int i = 0; i < deque.size(); i++) {
+        if (Vector2Equals(deque.at(i), position)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+Vector2 Food::GenerateRandomPosition(const std::deque<Vector2> &snakeBody) {
+    const Vector2 newPosition = ChangePosition();
+    while (FindElementInDeque(position, snakeBody)) {
+        position = ChangePosition();
+    }
+    return newPosition;
 }

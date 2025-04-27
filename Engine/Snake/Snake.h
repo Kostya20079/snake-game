@@ -16,6 +16,7 @@ public:
     Vector2 get_direction() const;
 
     Vector2 get_head_position() const;
+    std::deque<Vector2> get_body_positions() const;
 
     // class methods
     void Draw(int offsetX, int offsetY, int cellSize) const;

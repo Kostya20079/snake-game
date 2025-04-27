@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "raymath.h"
 #include "../Config.h"
 #include "../Theme/Colors.h"
 #include "../Snake/Snake.h"
@@ -26,6 +27,7 @@ void Game::DrawGrid() const {
 
 void Game::Update() {
     snake.Update();
+    CheckCollisionWithFood();
 }
 
 void Game::HandleInput() {
@@ -42,6 +44,12 @@ void Game::HandleInput() {
     }
     if (IsKeyPressed(KEY_DOWN) && currentDirection.y != -1) {
         snake.set_direction({0, 1});
+    }
+}
+
+void Game::CheckCollisionWithFood() {
+    if (Vector2Equals(snake.get_head_position(), food.get_position())) {
+        food.GenerateRandomPosition(snake.get_body_positions());
     }
 }
 

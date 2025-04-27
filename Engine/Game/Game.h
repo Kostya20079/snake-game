@@ -10,12 +10,13 @@ public:
     Game(int offsetX, int offsetY);
 
     Snake snake;
-    Food food;
+    Food food{ snake.get_body_positions() };
 
     // class methods
     void Draw() const;
     void Update();
     void HandleInput();
+    void CheckCollisionWithFood();
     bool IsGameOver() const;
 
 private:
