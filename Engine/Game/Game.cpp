@@ -50,6 +50,7 @@ void Game::HandleInput() {
 void Game::CheckCollisionWithFood() {
     if (Vector2Equals(snake.get_head_position(), food.get_position())) {
         food.GenerateRandomPosition(snake.get_body_positions());
+        snake.set_segment(true);
     }
 }
 

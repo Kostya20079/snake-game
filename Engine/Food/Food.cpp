@@ -45,8 +45,8 @@ Vector2 Food::ChangePosition() {
 }
 
 bool Food::FindElementInDeque(const Vector2 position, const std::deque<Vector2> &deque) {
-    for (unsigned int i = 0; i < deque.size(); i++) {
-        if (Vector2Equals(deque.at(i), position)) {
+    for (const auto i : deque) {
+        if (Vector2Equals(i, position)) {
             return true;
         }
     }

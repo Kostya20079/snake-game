@@ -11,6 +11,7 @@ public:
 
     // setters
     void set_direction(Vector2 direction);
+    void set_segment(bool state);
 
     // getters
     Vector2 get_direction() const;
@@ -25,6 +26,7 @@ public:
 private:
     std::deque<Vector2> body;
     Vector2 direction;
+    bool addSegment = false;
 };
 
 #endif //SNAKE_H
