@@ -22,6 +22,7 @@ public:
     // class methods
     void Draw(int offsetX, int offsetY, int cellSize) const;
     void Update();
+    void ResetPosition();
 
 private:
     std::deque<Vector2> body;

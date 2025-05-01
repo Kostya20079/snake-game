@@ -1,6 +1,8 @@
 #include "Game.h"
 
+#include <raylib.h>
 #include "raymath.h"
+#include <string>
 #include "../Config.h"
 #include "../Theme/Colors.h"
 #include "../Snake/Snake.h"
@@ -12,10 +14,23 @@ Game::Game(const int offsetX, const int offsetY) :
 {}
 
 // class methods
-void Game::Draw() const {
+void Game::Draw() {
     DrawGrid();
     snake.Draw(offsetX, offsetY, cellSize);
     food.Draw(offsetX, offsetY, cellSize);
+
+    if (isGameOver) {
+        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.5f)); // blur effect
+        DrawRestartText("Press ENTER to continue...");
+    }
+}
+
+void Game::DrawRestartText(const std::string& message) {
+    const int textWidth = MeasureText(message.c_str(), fontSize);
+    const int x = (GetScreenWidth() - textWidth) / 2;
+    const int y = GetScreenHeight() / 2;
+
+    DrawText(message.c_str(), x, y, fontSize, RAYWHITE);
 }
 
 void Game::DrawGrid() const {
@@ -26,8 +41,11 @@ void Game::DrawGrid() const {
 }
 
 void Game::Update() {
-    snake.Update();
-    CheckCollisionWithFood();
+    if (isRunningGame) {
+        snake.Update();
+        CheckCollisionWithFood();
+        CheckCollisionWithEdges();
+    }
 }
 
 void Game::HandleInput() {
@@ -45,6 +63,14 @@ void Game::HandleInput() {
     if (IsKeyPressed(KEY_DOWN) && currentDirection.y != -1) {
         snake.set_direction({0, 1});
     }
+
+    // restart game after enter key is pressed
+    if (IsKeyPressed(KEY_ENTER) && isGameOver) {
+        isRunningGame = true;
+        isGameOver = false;
+        snake.ResetPosition();
+        food.set_position(food.GenerateRandomPosition(snake.get_body_positions()));
+    }
 }
 
 void Game::CheckCollisionWithFood() {
@@ -54,8 +80,17 @@ void Game::CheckCollisionWithFood() {
     }
 }
 
-bool Game::IsGameOver() const {
+void Game::CheckCollisionWithEdges() {
     auto [x, y] = snake.get_head_position();
 
-    return (x < 0 || x >= cellCount) || (y < 0 || y >= cellCount);
+    if ((x < 0 || x >= cellCount) || (y < 0 || y >= cellCount)) {
+        GameOver();
+    }
+}
+
+void Game::GameOver() {
+    snake.ResetPosition();
+    food.set_position(food.GenerateRandomPosition(snake.get_body_positions()));
+    this->isRunningGame = false;
+    isGameOver = true;
 }

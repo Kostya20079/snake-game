@@ -13,6 +13,9 @@ public:
     // getters
     Vector2 get_position() const;
 
+    // setters
+    void set_position(const Vector2& position);
+
     // class methods
     void Draw(int offsetX, int offsetY, int cellSize) const;
     Vector2 GenerateRandomPosition(const std::deque<Vector2> &snakeBody);

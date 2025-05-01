@@ -1,10 +1,11 @@
 #include "Snake.h"
 #include <deque>
 #include <raymath.h>
+#include "../Config.h"
 #include "../Theme/Colors.h"
 
 // example snake body and move
-Snake::Snake(): body({Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}}), direction(Vector2 {1, 0}) {}
+Snake::Snake(): body(startBodyPosition), direction(directionOfMoving) {}
 
 // setters
 void Snake::set_direction(const Vector2 direction) {
@@ -57,4 +58,9 @@ void Snake::Update() {
     } else {
         body.pop_back();
     }
+}
+
+void Snake::ResetPosition() {
+    body = startBodyPosition;
+    direction = directionOfMoving;
 }

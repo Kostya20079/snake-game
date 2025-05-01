@@ -38,6 +38,10 @@ Vector2 Food::get_position() const {
     return position;
 }
 
+void Food::set_position(const Vector2 &position) {
+    this->position = position;
+}
+
 Vector2 Food::ChangePosition() {
     const int x = GetRandomValue(0,  cellCount - 1);
     const int y = GetRandomValue(0,  cellCount - 1);

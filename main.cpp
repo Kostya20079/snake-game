@@ -54,8 +54,6 @@ int main () {
             game.Update();
         }
 
-        if (game.IsGameOver()) break;
-
         EndDrawing();
     }
 
