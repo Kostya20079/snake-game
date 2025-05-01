@@ -3,7 +3,9 @@
 #include <raylib.h>
 #include "raymath.h"
 #include <string>
+#include <deque>
 #include "../Config.h"
+#include "../../src/Utils/VectorUtils.h"
 #include "../Theme/Colors.h"
 #include "../Snake/Snake.h"
 #include "../Food/Food.h"
@@ -45,6 +47,7 @@ void Game::Update() {
         snake.Update();
         CheckCollisionWithFood();
         CheckCollisionWithEdges();
+        CheckCollisionWithTail();
     }
 }
 
@@ -84,6 +87,15 @@ void Game::CheckCollisionWithEdges() {
     auto [x, y] = snake.get_head_position();
 
     if ((x < 0 || x >= cellCount) || (y < 0 || y >= cellCount)) {
+        GameOver();
+    }
+}
+
+void Game::CheckCollisionWithTail() {
+    std::deque<Vector2> headlessBody = snake.get_body_positions();
+    headlessBody.pop_front();
+
+    if (VectorUtils::FindElementInDeque(snake.get_head_position(), headlessBody)) {
         GameOver();
     }
 }

@@ -20,6 +20,7 @@ public:
     void HandleInput();
     void CheckCollisionWithFood();
     void CheckCollisionWithEdges();
+    void CheckCollisionWithTail();
     void GameOver();
 
 private:

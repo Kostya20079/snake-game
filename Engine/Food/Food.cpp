@@ -1,8 +1,8 @@
 #include "Food.h"
 
 #include "../Config.h"
+#include "../../src/Utils/VectorUtils.h"
 #include <raylib.h>
-#include "raymath.h"
 
 Food::Food(const std::deque<Vector2>& snakeBody): position(GenerateRandomPosition(snakeBody)) {
     LoadTexture();
@@ -48,18 +48,9 @@ Vector2 Food::ChangePosition() {
     return Vector2{static_cast<float>(x), static_cast<float>(y)};
 }
 
-bool Food::FindElementInDeque(const Vector2 position, const std::deque<Vector2> &deque) {
-    for (const auto i : deque) {
-        if (Vector2Equals(i, position)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 Vector2 Food::GenerateRandomPosition(const std::deque<Vector2> &snakeBody) {
     const Vector2 newPosition = ChangePosition();
-    while (FindElementInDeque(position, snakeBody)) {
+    while (VectorUtils::FindElementInDeque(position, snakeBody)) {
         position = ChangePosition();
     }
     return newPosition;

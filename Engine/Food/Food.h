@@ -26,7 +26,6 @@ private:
 
     void LoadTexture();
     static Vector2 ChangePosition();
-    bool FindElementInDeque(Vector2 position, const std::deque<Vector2> &deque);
 };
 
 #endif //FOOD_H
