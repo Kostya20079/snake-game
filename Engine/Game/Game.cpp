@@ -10,13 +10,28 @@
 #include "../Snake/Snake.h"
 #include "../Food/Food.h"
 
+Game::Game(): offsetX(0), offsetY(0) {}
+
 Game::Game(const int offsetX, const int offsetY) :
     offsetX(offsetX),
     offsetY(offsetY)
 {}
 
+// setters
+void Game::setOffsetX(const int offsetX) {
+    this->offsetX = offsetX;
+}
+
+void Game::setOffsetY(const int offsetY) {
+    this->offsetY = offsetY;
+}
+
 // class methods
 void Game::Draw() {
+    const auto gameTitle = "Snake game";
+    const int titleWidth = MeasureText(gameTitle, fontSize);
+    DrawText(gameTitle, offsetX + (gridSize - titleWidth) / 2, offsetY - 20 - fontSize, fontSize, WHITE);
+
     DrawGrid();
     snake.Draw(offsetX, offsetY, cellSize);
     food.Draw(offsetX, offsetY, cellSize);

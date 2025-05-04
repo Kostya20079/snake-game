@@ -8,10 +8,15 @@
 class Game {
 public:
     // constructors
+    Game();
     Game(int offsetX, int offsetY);
 
     Snake snake;
     Food food{ snake.get_body_positions() };
+
+    // setters
+    void setOffsetX(int offsetX);
+    void setOffsetY(int offsetY);
 
     // class methods
     void Draw();

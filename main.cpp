@@ -28,21 +28,24 @@ int main () {
     InitWindow(GetScreenWidth(), GetScreenHeight(), "Snake game");
     SetTargetFPS(60); // frequency of refreshing screen
 
-    // getting current screen size
-    int screenWidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-
-    // calculating offset
-    const int offsetX = (screenWidth - gridSize) / 2;
-    const int offsetY = (screenHeight - gridSize) / 2;
-
-    Game game{offsetX, offsetY};
+    Game game{};
 
     while (!WindowShouldClose()) {
         BeginDrawing();
 
         // drawing
         ClearBackground(lightGreen);
+
+        // getting current screen size
+        const int screenWidth = GetScreenWidth();
+        const int screenHeight = GetScreenHeight();
+
+        // calculating offset
+        const int offsetX = (screenWidth - gridSize) / 2;
+        const int offsetY = (screenHeight - gridSize) / 2;
+
+        game.setOffsetX(offsetX);
+        game.setOffsetY(offsetY);
 
         game.Draw();
 
