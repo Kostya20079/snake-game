@@ -10,12 +10,23 @@
 #include "../Snake/Snake.h"
 #include "../Food/Food.h"
 
-Game::Game(): offsetX(0), offsetY(0) {}
+Game::Game(): offsetX(0), offsetY(0) {
+    InitAudioDevice(); // Initializes audio system
+
+    this->wallSound = LoadSound("Sounds/wall.mp3");
+    this->eatSound = LoadSound("Sounds/eat.mp3");
+}
 
 Game::Game(const int offsetX, const int offsetY) :
     offsetX(offsetX),
     offsetY(offsetY)
 {}
+
+Game::~Game() {
+    UnloadSound(this->wallSound);
+    UnloadSound(this->eatSound);
+    CloseAudioDevice();
+}
 
 // setters
 void Game::setOffsetX(const int offsetX) {
@@ -98,6 +109,8 @@ void Game::CheckCollisionWithFood() {
         food.GenerateRandomPosition(snake.get_body_positions());
         snake.set_segment(true);
         score++;
+
+        PlaySound(this->eatSound);
     }
 }
 
@@ -124,4 +137,6 @@ void Game::GameOver() {
     isRunningGame = false;
     isGameOver = true;
     score = 0;
+
+    PlaySound(wallSound);
 }

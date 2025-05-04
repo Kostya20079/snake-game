@@ -10,6 +10,7 @@ public:
     // constructors
     Game();
     Game(int offsetX, int offsetY);
+    ~Game();
 
     Snake snake;
     Food food{ snake.get_body_positions() };
@@ -34,6 +35,9 @@ private:
     bool isRunningGame = true;
     bool isGameOver = false;
     int score = 0;
+
+    Sound wallSound;
+    Sound eatSound;
 
     void DrawGrid() const;
 };

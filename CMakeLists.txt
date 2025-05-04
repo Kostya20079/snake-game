@@ -32,3 +32,13 @@ add_executable(snake_game main.cpp
 
 # Link raylib (and its dependencies)
 target_link_libraries(snake_game PRIVATE raylib)
+
+# Set output directory path (this is where the binary will run from)
+set(OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+# Copy the Sounds directory to the output directory
+add_custom_command(TARGET snake_game POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/Sounds
+        ${OUTPUT_DIR}/Sounds
+)
