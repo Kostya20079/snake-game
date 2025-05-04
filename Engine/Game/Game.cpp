@@ -30,7 +30,9 @@ void Game::setOffsetY(const int offsetY) {
 void Game::Draw() {
     const auto gameTitle = "Snake game";
     const int titleWidth = MeasureText(gameTitle, fontSize);
-    DrawText(gameTitle, offsetX + (gridSize - titleWidth) / 2, offsetY - 20 - fontSize, fontSize, WHITE);
+    DrawText(gameTitle, offsetX + (gridSize - titleWidth) / 2, offsetY - 20 - fontSize, fontSize, darkGreen);
+
+    DrawText(TextFormat("Score: %i", score), offsetX, offsetY + (gridSize + 20), fontSize, darkGreen);
 
     DrawGrid();
     snake.Draw(offsetX, offsetY, cellSize);
@@ -95,6 +97,7 @@ void Game::CheckCollisionWithFood() {
     if (Vector2Equals(snake.get_head_position(), food.get_position())) {
         food.GenerateRandomPosition(snake.get_body_positions());
         snake.set_segment(true);
+        score++;
     }
 }
 
@@ -118,6 +121,7 @@ void Game::CheckCollisionWithTail() {
 void Game::GameOver() {
     snake.ResetPosition();
     food.set_position(food.GenerateRandomPosition(snake.get_body_positions()));
-    this->isRunningGame = false;
+    isRunningGame = false;
     isGameOver = true;
+    score = 0;
 }

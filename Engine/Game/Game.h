@@ -33,6 +33,7 @@ private:
     int offsetY;
     bool isRunningGame = true;
     bool isGameOver = false;
+    int score = 0;
 
     void DrawGrid() const;
 };
